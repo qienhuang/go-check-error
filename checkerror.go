@@ -8,10 +8,10 @@ import (
 
 // A general go check error function
 /* EXAMPLES:
-CheckError(err)
-CheckError(err, "Fatal")  //Specifies log style
-CheckError(err, "Fatal", "Read config.yaml file")    //Specifies log style and output message
-CheckError(err, "Read config file")      //Only specifies log output message
+checkError.With(err)
+checkError.With(err, "Fatal")  //Specifies log style
+checkError.With(err, "Fatal", "Read config.yaml file")    //Specifies log style and output message
+checkError.With(err, "Read config file")      //Only specifies log output message
 */
 
 func With(err error, args ...string) {
