@@ -1,5 +1,4 @@
-# A general go check error function
-
+# A general check error function for Golang
 
 ```
 EXAMPLES:
