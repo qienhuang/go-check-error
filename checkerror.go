@@ -3,15 +3,15 @@ package checkerror
 import (
 	"fmt"
 	"log"
-	"runtime"
+
 )
 
 // A general go check error function
 /* EXAMPLES:
-checkError.With(err)
-checkError.With(err, "Fatal")  //Specifies log style
-checkError.With(err, "Fatal", "Read config.yaml file")    //Specifies log style and output message
-checkError.With(err, "Read config file")      //Only specifies log output message
+CheckError(err)
+CheckError(err, "Fatal")  //Specifies log style
+CheckError(err, "Fatal", "Read config.yaml file")    //Specifies log style and output message
+CheckError(err, "Read config file")      //Only specifies log output message
 */
 
 func With(err error, args ...string) {
@@ -34,21 +34,14 @@ func With(err error, args ...string) {
 		}
 	}
 
-	//If doesn't specify a tag, then use the caller function name instead
+	var msg string
 	if tag == "" {
-		fpcs := make([]uintptr, 1)
-		n := runtime.Callers(3, fpcs)
-		if n != 0 {
-			fun := runtime.FuncForPC(fpcs[0] - 1)
-			if fun != nil {
-				tag = "From " + fun.Name() + ": "
-			}
-		}
-
+		msg = fmt.Sprintf("%v", err)
+	} else {
+		msg = fmt.Sprintf("[%s] %v", tag, err)
 	}
 
 	//Print out
-	msg := fmt.Sprintf("[%s] %s", tag, err)
 	switch logStyle {
 	case "fatal":
 		log.Fatal(msg)
